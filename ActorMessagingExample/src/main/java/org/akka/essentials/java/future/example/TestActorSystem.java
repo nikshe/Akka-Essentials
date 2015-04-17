@@ -10,7 +10,7 @@ public class TestActorSystem {
 		ActorSystem _system = ActorSystem.create("FutureUsageExample");
 		ActorRef processOrder = _system.actorOf(new Props(
 				ProcessOrderActor.class));
-		processOrder.tell(Integer.valueOf(456));
+		processOrder.tell(Integer.valueOf(456), processOrder);
 
 		Thread.sleep(5000);
 

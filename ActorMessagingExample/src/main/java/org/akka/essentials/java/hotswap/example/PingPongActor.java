@@ -13,22 +13,23 @@ public class PingPongActor extends UntypedActor {
 	public void onReceive(Object message) throws Exception {
 		if (message instanceof String) {
 			if (((String) message).matches(PING)) {
-				System.out.println("PING");
+				System.out.println("received a message "+message);
 				count += 1;
 				Thread.sleep(100);
-				getSelf().tell(PONG);
+				System.out.println("sleep 0.1's ... and send a meesage to "+getSelf());
+				getSelf().tell(PONG,getSelf());
 				getContext().become(new Procedure<Object>() {
 					public void apply(Object message) {
 						if (message instanceof String) {
 							if (((String) message).matches(PONG)) {
-								System.out.println("PONG");
+								System.out.println(count+ " received a message : " + getSelf());
 								count += 1;
 								try {
 									Thread.sleep(100);
 								} catch (InterruptedException e) {
 									//
 								}
-								getSelf().tell(PING);
+								getSelf().tell(PING,getSelf());
 								getContext().unbecome();
 							}
 						}
